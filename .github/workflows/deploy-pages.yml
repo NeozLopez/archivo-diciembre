@@ -30,7 +30,7 @@ jobs:
       - name: Preparar archivos estáticos
         run: |
           mkdir _site
-          rsync -a --exclude='.git' --exclude='.github' --exclude='serve-local.js' ./ _site/
+          rsync -a --exclude='.git' --exclude='.github' --exclude='_site' --exclude='serve-local.js' ./ _site/
       - name: Subir sitio
         uses: actions/upload-pages-artifact@v3
         with:
