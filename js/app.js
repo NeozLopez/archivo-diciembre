@@ -11,7 +11,6 @@
     const audio = player.querySelector("audio");
     player.querySelector("button").addEventListener("click", () => { audio.pause(); player.remove(); });
     document.querySelector("#music-player-slot").append(player);
-    audio.play().catch(() => {});
   }
 
   function openAdventure() {
@@ -24,6 +23,8 @@
   const enter = root.querySelector("[data-enter]");
   const form = root.querySelector("[data-question-form]");
   const feedback = root.querySelector("[data-feedback]");
+  const errorDialog = root.querySelector("[data-error-dialog]");
+  const successDialog = root.querySelector("[data-success-dialog]");
   root.querySelector("[data-question]").textContent = data.access.question;
   const options = root.querySelector("[data-options]");
   data.access.options.forEach((option) => {
@@ -38,8 +39,8 @@
   });
 
   enter.addEventListener("click", () => {
-    startMusic();
     enter.hidden = true;
+    root.querySelector("[data-gate-title]").hidden = true;
     form.hidden = false;
     form.querySelector("input").focus();
   });
@@ -48,10 +49,21 @@
     event.preventDefault();
     const selected = form.querySelector("input:checked");
     if (selected && selected.value === data.access.answer) {
-      feedback.textContent = data.access.successMessage;
-      window.setTimeout(openAdventure, 850);
+      successDialog.showModal();
     } else {
-      feedback.textContent = "Casi… piensa en nosotros.";
+      errorDialog.showModal();
     }
+  });
+
+  root.querySelector("[data-retry]").addEventListener("click", () => {
+    errorDialog.close();
+    form.reset();
+    form.querySelector("input").focus();
+  });
+
+  root.querySelector("[data-continue]").addEventListener("click", () => {
+    successDialog.close();
+    startMusic();
+    openAdventure();
   });
 })();

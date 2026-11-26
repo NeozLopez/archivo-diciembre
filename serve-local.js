@@ -9,7 +9,9 @@ const types = {
   ".html": "text/html; charset=utf-8",
   ".jpg": "image/jpeg",
   ".js": "text/javascript; charset=utf-8",
-  ".mp4": "video/mp4"
+  ".mp4": "video/mp4",
+  ".png": "image/png",
+  ".webp": "image/webp"
 };
 
 http.createServer((request, response) => {

@@ -2,7 +2,7 @@
 // No guardes aquí información sensible que no deba publicarse en el sitio.
 window.ANNIVERSARY_DATA = {
   access: {
-    question: "Pero antes de entrar, una prueba: ¿qué día nos conocimos?",
+    question: "Alto allí, primero vamos a verificar que seas Lau, mi amocito, con una pregunta sencilla. ¿Qué día nos conocimos?",
     answer: "2025-08-25",
     options: [
       { value: "2025-08-25", label: "25 de agosto de 2025" },

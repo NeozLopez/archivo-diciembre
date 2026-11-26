@@ -30,12 +30,17 @@ h1 { max-width: 640px; margin: 0 auto; font-size: clamp(2.7rem, 11vw, 5.7rem); f
 .enter-button { margin-top: 2.4rem; padding: .9rem 1.7rem; border: 1px solid var(--rose); border-radius: .35rem; color: #fff; background: var(--rose); cursor: pointer; font-size: .95rem; transition: background .2s, color .2s; }
 .enter-button:hover, .enter-button:focus-visible { color: var(--rose); background: transparent; }
 .gate-question { max-width: 480px; margin: 2.5rem auto 0; text-align: left; }
+.gate-image { display: block; width: min(100%, 260px); margin: 0 auto 1.5rem; }
 .gate-question fieldset { margin: 0; padding: 0; border: 0; }
-.gate-question legend { margin-bottom: 1rem; color: var(--ink); font-size: 1.15rem; line-height: 1.4; }
+.gate-question__title { margin: 0 0 1rem; color: var(--ink); font-size: 1.15rem; font-weight: 400; line-height: 1.4; }
 .date-options { display: grid; gap: .65rem; }
 .date-options label { display: flex; align-items: center; gap: .7rem; padding: .9rem 1rem; border: 1px solid var(--line); border-radius: .35rem; cursor: pointer; color: var(--muted); }
 .date-options label:has(input:checked) { border-color: var(--rose); color: var(--rose); background: #fff7f8; }
 .continue-button { margin-top: 1rem; padding: .85rem 1rem; border: 0; border-radius: .35rem; color: #fff; background: var(--rose); cursor: pointer; }
+.error-dialog, .success-dialog { width: min(100% - 2rem, 340px); padding: 2rem; border: 1px solid var(--line); border-radius: .6rem; color: var(--ink); background: #fffaf7; box-shadow: var(--shadow); text-align: center; }
+.error-dialog::backdrop, .success-dialog::backdrop { background: rgb(44 32 37 / 45%); }
+.error-dialog img, .success-dialog img { display: block; width: min(100%, 190px); margin: 0 auto 1.2rem; border-radius: .4rem; }
+.error-dialog p, .success-dialog p { margin: 0; font-size: 1.25rem; }
 .memory-reveal { margin: 0; }
 .memory-reveal img { display: block; width: 100%; max-height: 420px; border-radius: .45rem; object-fit: cover; }
 .memory-reveal figcaption { margin-top: 1.25rem; color: var(--muted); line-height: 1.6; }

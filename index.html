@@ -15,16 +15,28 @@
 
     <template id="gate-template">
       <section class="hero hero--gate">
-        <h1>Para Lau, mi amocito de parte de Diego....</h1>
-        <button class="enter-button" type="button" data-enter>Comenzar</button>
+        <h1 data-gate-title>Para Lau, mi amocito de parte de Diego....</h1>
+        <button class="enter-button" type="button" data-enter>Entrar</button>
         <form class="gate-question" data-question-form hidden>
+          <h2 class="gate-question__title" data-question></h2>
+          <img class="gate-image" src="assets/images/alto-alli.png" alt="Un perrito sosteniendo una pistola de juguete" />
           <fieldset>
-            <legend data-question></legend>
+            <legend class="sr-only">Elige una fecha</legend>
             <div class="date-options" data-options></div>
           </fieldset>
-          <button class="continue-button">Continuar</button>
+          <button class="continue-button">Verificar respuesta</button>
           <p class="feedback" data-feedback></p>
         </form>
+        <dialog class="error-dialog" data-error-dialog>
+          <img src="assets/images/error.webp" alt="Perrito con expresión sorprendida" />
+          <p>Respuesta incorrecta</p>
+          <button class="continue-button" type="button" data-retry>Intentar de nuevo</button>
+        </dialog>
+        <dialog class="success-dialog" data-success-dialog>
+          <img src="assets/images/correcto.webp" alt="Perrito celebrando" />
+          <p>Correcto</p>
+          <button class="continue-button" type="button" data-continue>Continuar</button>
+        </dialog>
       </section>
     </template>
 
