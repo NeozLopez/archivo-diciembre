@@ -13,13 +13,26 @@
       <section id="experience" class="experience" aria-live="polite"></section>
     </main>
 
+    <template id="password-template">
+      <section class="terminal-screen">
+        <p class="terminal-screen__status">[ SISTEMA DE ACCESO PRIVADO ]</p>
+        <h1>ARCHIVO CIFRADO</h1>
+        <p class="terminal-screen__copy">Identidad requerida para continuar.</p>
+        <form class="terminal-form" data-password-form>
+          <label for="access-password">CONTRASEÑA</label>
+          <input id="access-password" type="password" autocomplete="off" required />
+          <button type="submit">Comenzar</button>
+          <p class="terminal-form__feedback" data-password-feedback></p>
+        </form>
+      </section>
+    </template>
+
     <template id="gate-template">
       <section class="hero hero--gate">
         <h1 data-gate-title>Para Lau, mi amocito de parte de Diego....</h1>
-        <button class="enter-button" type="button" data-enter>Entrar</button>
-        <form class="gate-question" data-question-form hidden>
+        <button class="enter-button" type="button" data-enter>Comenzar</button>
+        <form class="gate-question level-card" data-question-form hidden>
           <h2 class="gate-question__title" data-question></h2>
-          <img class="gate-image" src="assets/images/alto-alli.png" alt="Un perrito sosteniendo una pistola de juguete" />
           <fieldset>
             <legend class="sr-only">Elige una fecha</legend>
             <div class="date-options" data-options></div>
@@ -41,11 +54,7 @@
     </template>
 
     <template id="game-template">
-      <section class="hero hero--game">
-        <p class="eyebrow">Nuestra historia</p>
-        <h1>La aventura comienza.</h1>
-        <p class="lead">Cada recuerdo abre el siguiente. Esta primera versión usa contenido de muestra que podrás reemplazar después.</p>
-        <p class="progress" data-progress></p>
+      <section class="game-flow">
         <article class="level-card" data-level-card></article>
       </section>
     </template>

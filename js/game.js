@@ -1,5 +1,5 @@
 window.Game = (() => {
-  const key = "lau-diego-progress-v2";
+  const key = "lau-diego-progress-v3";
   const load = () => { try { return JSON.parse(localStorage.getItem(key)) || []; } catch { return []; } };
   const save = (value) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch {} };
   const normalize = (value) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -14,9 +14,8 @@ window.Game = (() => {
   function start(root, levels, album) {
     let complete = load();
     const orderedLevels = levels;
-    const progress = root.querySelector("[data-progress]"); const card = root.querySelector("[data-level-card]");
+    const card = root.querySelector("[data-level-card]");
     const draw = () => {
-      progress.textContent = `${complete.length} / ${levels.length} recuerdos descubiertos`;
       const level = orderedLevels.find(item => !complete.includes(item.id));
       if (!level) {
         const albumItems = album.items.map((item) => item.type === "video"

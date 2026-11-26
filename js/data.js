@@ -1,8 +1,12 @@
 // Sustituye estos textos por información real cuando Diego la proporcione.
 // No guardes aquí información sensible que no deba publicarse en el sitio.
 window.ANNIVERSARY_DATA = {
+  terminal: {
+    // Sustituye esta clave temporal antes de compartir la página.
+    password: "diegoamaalau"
+  },
   access: {
-    question: "Alto allí, primero vamos a verificar que seas Lau, mi amocito, con una pregunta sencilla. ¿Qué día nos conocimos?",
+    question: "Nuestra historia comenzó el día en que nos conocimos. Ese día estaba nervioso de no fallar; quería verme natural y seguro. Mi primera impresión de ti fue que eras bonita, inteligente y alguien interesante. ¿Recuerdas qué día nos conocimos en persona?",
     answer: "2025-08-25",
     options: [
       { value: "2025-08-25", label: "25 de agosto de 2025" },
@@ -34,21 +38,6 @@ window.ANNIVERSARY_DATA = {
     title: "Nuestra canción"
   },
   levels: [
-    {
-      id: "comienzo",
-      title: "El comienzo",
-      type: "choice",
-      prompt: "¿Dónde fue nuestra primera cita?",
-      answer: "coyoacan",
-      options: [
-        { value: "coyoacan", label: "Coyoacán" },
-        { value: "tlalpan", label: "Tlalpan" },
-        { value: "muches-tepito", label: "Las Muches en Tepito" }
-      ],
-      image: "assets/photos/primera-cita.jpg",
-      imageAlt: "Recuerdo de la primera cita",
-      successMessage: "Exacto. Aquí comenzó uno de nuestros recuerdos favoritos."
-    },
     {
       id: "recuerdo",
       title: "Nuestra primera película",
