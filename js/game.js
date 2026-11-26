@@ -1,7 +1,4 @@
 window.Game = (() => {
-  const key = "lau-diego-progress-v3";
-  const load = () => { try { return JSON.parse(localStorage.getItem(key)) || []; } catch { return []; } };
-  const save = (value) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch {} };
   const normalize = (value) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
   const shuffle = (items) => {
     const copy = [...items];
@@ -11,10 +8,21 @@ window.Game = (() => {
     }
     return copy;
   };
-  function start(root, levels, album) {
-    let complete = load();
+  function start(root, levels, album, onRestart) {
+    let complete = [];
     const orderedLevels = levels;
     const card = root.querySelector("[data-level-card]");
+    const errorDialog = root.querySelector("[data-game-error-dialog]");
+    const successDialog = root.querySelector("[data-game-success-dialog]");
+    let retryCurrentQuestion = () => {};
+    root.querySelector("[data-game-retry]").addEventListener("click", () => {
+      errorDialog.close();
+      retryCurrentQuestion();
+    });
+    root.querySelector("[data-game-continue]").addEventListener("click", () => {
+      successDialog.close();
+      draw();
+    });
     const draw = () => {
       const level = orderedLevels.find(item => !complete.includes(item.id));
       if (!level) {
@@ -23,28 +31,31 @@ window.Game = (() => {
           : `<figure class="album-item ${item.className || ""}"><img src="${item.src}" alt="${item.alt}" /><figcaption>${item.caption}</figcaption></figure>`
         ).join("");
         card.innerHTML = `<h2>${album.title}</h2><p>${album.introduction}</p><div class="album">${albumItems}</div><button class="continue-button" type="button">Volver a empezar</button>`;
-        card.querySelector("button").addEventListener("click", () => { complete = []; save(complete); draw(); });
+        card.querySelector("button").addEventListener("click", () => {
+          complete = [];
+          if (onRestart) onRestart(); else draw();
+        });
         return;
       }
       const formMarkup = level.type === "choice"
         ? `<form class="level-form"><fieldset><legend class="sr-only">Elige una respuesta</legend><div class="date-options">${shuffle(level.options).map(option => `<label><input type="radio" name="level-answer" value="${option.value}" required />${option.label}</label>`).join("")}</div><button class="continue-button">Descubrir</button></fieldset></form>`
         : `<form class="answer"><input aria-label="Tu respuesta" required autocomplete="off" placeholder="Tu respuesta" /><button>Descubrir</button></form>`;
-      card.innerHTML = `<p class="eyebrow">Siguiente capítulo</p><h2>${level.title}</h2><p>${level.prompt}</p>${formMarkup}<p class="feedback"></p>`;
-      card.querySelector("form").addEventListener("submit", event => {
-        event.preventDefault(); const input = card.querySelector("input"); const feedback = card.querySelector(".feedback");
+      card.innerHTML = `<h2>${level.title}</h2><p>${level.prompt}</p>${formMarkup}`;
+      const form = card.querySelector("form");
+      form.addEventListener("submit", event => {
+        event.preventDefault(); const input = card.querySelector("input");
         const answer = level.type === "choice" ? card.querySelector("input:checked")?.value : input.value;
         if (answer && normalize(answer) === normalize(level.answer)) {
           complete = [...complete, level.id];
-          save(complete);
-          if (level.image) {
-            card.innerHTML = `<figure class="memory-reveal ${level.imageClass || ""}"><img src="${level.image}" alt="${level.imageAlt || "Recuerdo desbloqueado"}" /><figcaption>${level.successMessage}</figcaption></figure><button class="continue-button" type="button">Siguiente recuerdo</button>`;
-            card.querySelector("button").addEventListener("click", draw);
-          } else {
-            feedback.textContent = level.successMessage;
-            setTimeout(draw, 1400);
-          }
+          successDialog.showModal();
         }
-        else feedback.textContent = "Todavía no. Prueba de nuevo.";
+        else {
+          retryCurrentQuestion = () => {
+            form.reset();
+            form.querySelector("input").focus();
+          };
+          errorDialog.showModal();
+        }
       });
     };
     draw();

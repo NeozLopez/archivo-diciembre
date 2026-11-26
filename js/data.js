@@ -27,9 +27,16 @@ window.ANNIVERSARY_DATA = {
         caption: "Nuestra primera foto juntos."
       },
       {
-        type: "video",
-        src: "assets/photos/primerbailejuntos.mp4",
-        caption: "Nuestro primer baile."
+        type: "image",
+        src: "assets/photos/harrypotter.jpg",
+        alt: "Recuerdo de Harry Potter",
+        caption: "Harry Potter."
+      },
+      {
+        type: "image",
+        src: "assets/photos/cumpleaños.jpg",
+        alt: "Recuerdo de cumpleaños",
+        caption: "Cumpleaños."
       }
     ]
   },
@@ -49,9 +56,6 @@ window.ANNIVERSARY_DATA = {
         { value: "la-hermanastra-fea", label: "La hermanastra fea" },
         { value: "laberinto-del-fauno", label: "El laberinto del fauno" }
       ],
-      image: "assets/photos/primera-pelicula.jpg",
-      imageAlt: "Recuerdo de nuestra primera película juntos",
-      imageClass: "memory-reveal--movie",
       successMessage: "Sí. Una película, una sala oscura y un recuerdo que se quedó con nosotros."
     },
     {

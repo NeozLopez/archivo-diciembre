@@ -19,10 +19,10 @@
     shell.classList.remove("site-shell--terminal");
     root.replaceChildren();
     root.append(document.querySelector("#game-template").content.cloneNode(true));
-    window.Game.start(root, data.levels, data.album);
+    window.Game.start(root, data.levels, data.album, () => showGate(true));
   }
 
-  function showGate() {
+  function showGate(showQuestionImmediately = false) {
     shell.classList.remove("site-shell--terminal", "site-shell--unlocking");
     shell.classList.add("site-shell--letter-reveal");
     window.setTimeout(() => shell.classList.remove("site-shell--letter-reveal"), 700);
@@ -45,13 +45,16 @@
       options.append(label);
     });
 
-    enter.addEventListener("click", () => {
+    const revealQuestion = () => {
       startMusic();
       enter.hidden = true;
       root.querySelector("[data-gate-title]").hidden = true;
+      root.querySelector(".hero--gate").classList.add("hero--question");
       form.hidden = false;
       form.querySelector("input").focus();
-    });
+    };
+    enter.addEventListener("click", revealQuestion);
+    if (showQuestionImmediately) revealQuestion();
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();

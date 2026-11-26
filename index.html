@@ -56,6 +56,16 @@
     <template id="game-template">
       <section class="game-flow">
         <article class="level-card" data-level-card></article>
+        <dialog class="error-dialog" data-game-error-dialog>
+          <img src="assets/images/error.webp" alt="Perrito con expresión sorprendida" />
+          <p>Respuesta incorrecta</p>
+          <button class="continue-button" type="button" data-game-retry>Intentar de nuevo</button>
+        </dialog>
+        <dialog class="success-dialog" data-game-success-dialog>
+          <img src="assets/images/correcto.webp" alt="Perrito celebrando" />
+          <p>Correcto</p>
+          <button class="continue-button" type="button" data-game-continue>Continuar</button>
+        </dialog>
       </section>
     </template>
 

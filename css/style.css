@@ -49,9 +49,10 @@ h1 { max-width: 640px; margin: 0 auto; font-size: clamp(2.7rem, 11vw, 5.7rem); f
 .countdown span { display: block; margin-top: .5rem; color: var(--muted); font-family: Arial, sans-serif; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; }
 .hint { color: var(--muted); font-size: .95rem; font-style: italic; }
 .hero--gate { padding-top: min(22vh, 10rem); }
+.hero--gate.hero--question { padding-top: 0; }
 .enter-button { margin-top: 2.4rem; padding: .9rem 1.7rem; border: 1px solid var(--ink); border-radius: .15rem; color: #fff; background: var(--ink); cursor: pointer; font-size: .95rem; transition: background .2s, color .2s; }
 .enter-button:hover, .enter-button:focus-visible { color: var(--ink); background: transparent; }
-.gate-question { max-width: 480px; margin: 2.5rem auto 0; text-align: left; }
+.gate-question { max-width: 480px; margin: .75rem auto 0; text-align: left; }
 .gate-question fieldset { margin: 0; padding: 0; border: 0; }
 .gate-question__title { margin: 0 0 1rem; color: var(--ink); font-size: 1.15rem; font-weight: 400; line-height: 1.4; }
 .date-options { display: grid; gap: .65rem; }
@@ -65,10 +66,11 @@ h1 { max-width: 640px; margin: 0 auto; font-size: clamp(2.7rem, 11vw, 5.7rem); f
 .memory-reveal { margin: 0; }
 .memory-reveal img { display: block; width: 100%; max-height: 420px; border-radius: .45rem; object-fit: cover; }
 .memory-reveal figcaption { margin-top: 1.25rem; color: var(--muted); line-height: 1.6; }
-.album { display: grid; gap: 1.5rem; margin-top: 1.75rem; }
-.album-item { margin: 0; }
-.album-item img, .album-item video { display: block; width: 100%; max-height: 460px; border-radius: .45rem; object-fit: cover; background: #20161b; }
-.album-item figcaption { margin-top: .7rem; color: var(--muted); font-style: italic; }
+.album { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1.5rem; margin-top: 1.75rem; }
+.album-item { margin: 0; padding: .65rem .65rem 1rem; border: 1px solid #e6ded0; background: #fffefa; box-shadow: 0 10px 18px rgb(41 64 89 / 16%); transform: rotate(-1.2deg); }
+.album-item:nth-child(even) { transform: rotate(1.15deg); }
+.album-item img, .album-item video { display: block; width: 100%; aspect-ratio: 4 / 5; max-height: 460px; object-fit: cover; background: #20161b; }
+.album-item figcaption { margin-top: .8rem; padding-top: .7rem; border-top: 1px solid #d8e4ee; color: var(--ink); font-family: "Segoe Print", "Bradley Hand", cursive; font-size: .94rem; line-height: 1.35; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 @media (max-width: 599px) {
   .memory-reveal--movie img { width: min(72%, 260px); margin-inline: auto; }
