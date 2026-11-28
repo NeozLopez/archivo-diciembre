@@ -2,6 +2,53 @@
   const data = window.ANNIVERSARY_DATA;
   const root = document.querySelector("#experience");
   const shell = document.querySelector(".site-shell");
+  const preloadedAssets = [];
+
+  function preloadImage(source) {
+    return new Promise((resolve) => {
+      const image = new Image();
+      image.onload = image.onerror = () => resolve();
+      image.src = source;
+      preloadedAssets.push(image);
+    });
+  }
+
+  function preloadAudio(source) {
+    return new Promise((resolve) => {
+      const audio = new Audio();
+      const finish = () => resolve();
+      audio.preload = "auto";
+      audio.addEventListener("canplaythrough", finish, { once: true });
+      audio.addEventListener("error", finish, { once: true });
+      audio.src = source;
+      audio.load();
+      preloadedAssets.push(audio);
+      window.setTimeout(finish, 8000);
+    });
+  }
+
+  function showLoading() {
+    shell.classList.add("site-shell--terminal");
+    shell.classList.remove("site-shell--unlocking");
+    root.replaceChildren();
+    root.append(document.querySelector("#loading-template").content.cloneNode(true));
+    const progressBar = root.querySelector("[data-loading-bar]");
+    const progressText = root.querySelector("[data-loading-status]");
+    const assets = [
+      ...data.album.items.map((item) => ({ type: "image", source: item.src })),
+      { type: "image", source: "assets/images/error.webp" },
+      { type: "image", source: "assets/images/correcto.webp" },
+      { type: "audio", source: data.music.source }
+    ];
+    let complete = 0;
+    const updateProgress = () => {
+      complete += 1;
+      const percent = Math.round((complete / assets.length) * 100);
+      progressBar.style.width = `${percent}%`;
+      progressText.textContent = `${percent}% · ${complete} de ${assets.length}`;
+    };
+    Promise.all(assets.map((asset) => (asset.type === "audio" ? preloadAudio(asset.source) : preloadImage(asset.source)).then(updateProgress))).then(showGate);
+  }
 
   function startMusic() {
     if (document.querySelector("#music-player")) return;
@@ -87,7 +134,7 @@
       if (input.value === data.terminal.password) {
         feedback.textContent = "ACCESO CONCEDIDO";
         shell.classList.add("site-shell--unlocking");
-        window.setTimeout(showGate, 700);
+        window.setTimeout(showLoading, 700);
       } else {
         feedback.textContent = "ACCESO DENEGADO";
         form.reset();

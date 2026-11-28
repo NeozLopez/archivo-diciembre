@@ -33,6 +33,10 @@ button, input { font: inherit; }
 .terminal-form input:focus { box-shadow: 0 0 0 3px rgb(99 233 132 / 20%); }
 .terminal-form button { width: fit-content; padding: .8rem 1.25rem; border: 1px solid #80ff9d; color: #07130b; background: #80ff9d; cursor: pointer; font-family: Consolas, "Courier New", monospace; font-weight: bold; letter-spacing: .06em; }
 .terminal-form__feedback { min-height: 1rem; color: #ff7474; }
+.loading-screen { width: min(100%, 430px); }
+.loading-bar { width: 100%; height: .55rem; overflow: hidden; border: 1px solid #63e984; background: #07130b; }
+.loading-bar span { display: block; width: 0; height: 100%; background: #80ff9d; box-shadow: 0 0 12px rgb(128 255 157 / 80%); transition: width .18s ease; }
+.loading-screen__status { margin-top: .9rem; color: #b7fbc4; }
 @keyframes terminal-unlock { 0% { opacity: 1; filter: blur(0); transform: scale(1); } 55% { opacity: 1; filter: brightness(1.7); transform: scale(1.015); } 100% { opacity: 0; filter: blur(9px); transform: scale(.97); } }
 @keyframes letter-reveal { from { opacity: 0; transform: translateY(1.2rem) rotate(-.35deg); } to { opacity: 1; transform: translateY(0) rotate(0); } }
 .brand { display: flex; justify-content: space-between; align-items: center; margin-bottom: clamp(3rem, 12vw, 7rem); color: var(--muted); font-size: .83rem; letter-spacing: .08em; text-transform: uppercase; }
