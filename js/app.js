@@ -28,6 +28,8 @@
   }
 
   function showLoading() {
+    const minimumLoadingTime = 10000;
+    const loadingStartedAt = Date.now();
     shell.classList.add("site-shell--terminal");
     shell.classList.remove("site-shell--unlocking");
     root.replaceChildren();
@@ -43,11 +45,18 @@
     let complete = 0;
     const updateProgress = () => {
       complete += 1;
-      const percent = Math.round((complete / assets.length) * 100);
+      const percent = Math.min(90, Math.round((complete / assets.length) * 100));
       progressBar.style.width = `${percent}%`;
       progressText.textContent = `${percent}% · ${complete} de ${assets.length}`;
     };
-    Promise.all(assets.map((asset) => (asset.type === "audio" ? preloadAudio(asset.source) : preloadImage(asset.source)).then(updateProgress))).then(showGate);
+    Promise.all(assets.map((asset) => (asset.type === "audio" ? preloadAudio(asset.source) : preloadImage(asset.source)).then(updateProgress))).then(() => {
+      const remainingTime = Math.max(0, minimumLoadingTime - (Date.now() - loadingStartedAt));
+      window.setTimeout(() => {
+        progressBar.style.width = "100%";
+        progressText.textContent = "100% · Recuerdos listos";
+        window.setTimeout(showGate, 350);
+      }, remainingTime);
+    });
   }
 
   function startMusic() {
