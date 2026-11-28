@@ -55,7 +55,8 @@ const datedAlbumPhotos = [
   type: "image",
   src: `assets/photos/${fileName}`,
   alt: `Fotografía del ${date}`,
-  caption: date
+  caption: date,
+  note: "[Escribe aquí una frase sobre este recuerdo.]"
 }));
 
 window.ANNIVERSARY_DATA = {
@@ -82,19 +83,22 @@ window.ANNIVERSARY_DATA = {
         src: "assets/photos/primerafotojuntos.jpg",
         alt: "Nuestra primera foto juntos",
         className: "album-item--first-photo",
-        caption: "Nuestra primera foto juntos."
+        caption: "Nuestra primera foto juntos.",
+        note: "[Escribe aquí una frase sobre este recuerdo.]"
       },
       {
         type: "image",
         src: "assets/photos/harrypotter.jpg",
         alt: "Recuerdo de Harry Potter",
-        caption: "Harry Potter."
+        caption: "Harry Potter.",
+        note: "[Escribe aquí una frase sobre este recuerdo.]"
       },
       {
         type: "image",
         src: "assets/photos/cumpleaños.jpg",
         alt: "Recuerdo de cumpleaños",
-        caption: "Cumpleaños."
+        caption: "Cumpleaños.",
+        note: "[Escribe aquí una frase sobre este recuerdo.]"
       },
       ...datedAlbumPhotos
     ]

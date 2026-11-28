@@ -14,6 +14,9 @@ window.Game = (() => {
     const card = root.querySelector("[data-level-card]");
     const errorDialog = root.querySelector("[data-game-error-dialog]");
     const successDialog = root.querySelector("[data-game-success-dialog]");
+    const photoDialog = root.querySelector("[data-photo-dialog]");
+    const photoDialogImage = root.querySelector("[data-photo-dialog-image]");
+    const photoDialogNote = root.querySelector("[data-photo-dialog-note]");
     let retryCurrentQuestion = () => {};
     root.querySelector("[data-game-retry]").addEventListener("click", () => {
       errorDialog.close();
@@ -23,6 +26,7 @@ window.Game = (() => {
       successDialog.close();
       draw();
     });
+    root.querySelector("[data-photo-dialog-close]").addEventListener("click", () => photoDialog.close());
     const renderAlbum = () => {
       const pageSize = 4;
       let page = 0;
@@ -34,9 +38,16 @@ window.Game = (() => {
       const showPage = () => {
         const start = page * pageSize;
         const photos = album.items.slice(start, start + pageSize);
-        const albumItems = photos.map((item) => `<figure class="album-item ${item.className || ""}"><img src="${item.src}" alt="${item.alt}" /><figcaption>${item.caption}</figcaption></figure>`).join("");
+        const albumItems = photos.map((item, index) => `<figure class="album-item ${item.className || ""}"><button class="album-item__open" type="button" data-album-index="${start + index}"><img src="${item.src}" alt="${item.alt}" /></button><figcaption>${item.caption}</figcaption></figure>`).join("");
         const isLastPage = start + pageSize >= album.items.length;
         card.innerHTML = `<h2>${album.title}</h2><div class="album">${albumItems}</div><p class="album-page-number">Página ${page + 1} de ${Math.ceil(album.items.length / pageSize)}</p><button class="continue-button" type="button">${isLastPage ? "Volver a empezar" : "Siguiente página"}</button>`;
+        card.querySelectorAll("[data-album-index]").forEach((button) => button.addEventListener("click", () => {
+          const item = album.items[Number(button.dataset.albumIndex)];
+          photoDialogImage.src = item.src;
+          photoDialogImage.alt = item.alt;
+          photoDialogNote.textContent = item.note || "[Escribe aquí una frase sobre este recuerdo.]";
+          photoDialog.showModal();
+        }));
         card.querySelector("button").addEventListener("click", () => {
           if (isLastPage) {
             complete = [];
