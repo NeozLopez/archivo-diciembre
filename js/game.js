@@ -23,18 +23,37 @@ window.Game = (() => {
       successDialog.close();
       draw();
     });
+    const renderAlbum = () => {
+      const pageSize = 4;
+      let page = 0;
+      const showCover = () => {
+        card.classList.add("album-card");
+        card.innerHTML = `<div class="album-cover"><p>Una colección de momentos</p><h2>${album.title}</h2><button class="continue-button" type="button">Ver álbum</button></div>`;
+        card.querySelector("button").addEventListener("click", showPage);
+      };
+      const showPage = () => {
+        const start = page * pageSize;
+        const photos = album.items.slice(start, start + pageSize);
+        const albumItems = photos.map((item) => `<figure class="album-item ${item.className || ""}"><img src="${item.src}" alt="${item.alt}" /><figcaption>${item.caption}</figcaption></figure>`).join("");
+        const isLastPage = start + pageSize >= album.items.length;
+        card.innerHTML = `<h2>${album.title}</h2><div class="album">${albumItems}</div><p class="album-page-number">Página ${page + 1} de ${Math.ceil(album.items.length / pageSize)}</p><button class="continue-button" type="button">${isLastPage ? "Volver a empezar" : "Siguiente página"}</button>`;
+        card.querySelector("button").addEventListener("click", () => {
+          if (isLastPage) {
+            complete = [];
+            if (onRestart) onRestart(); else draw();
+          } else {
+            page += 1;
+            showPage();
+          }
+        });
+      };
+      showCover();
+    };
     const draw = () => {
+      card.classList.remove("album-card");
       const level = orderedLevels.find(item => !complete.includes(item.id));
       if (!level) {
-        const albumItems = album.items.map((item) => item.type === "video"
-          ? `<figure class="album-item"><video controls playsinline preload="metadata"><source src="${item.src}" type="video/mp4" />Tu navegador no puede reproducir este video.</video><figcaption>${item.caption}</figcaption></figure>`
-          : `<figure class="album-item ${item.className || ""}"><img src="${item.src}" alt="${item.alt}" /><figcaption>${item.caption}</figcaption></figure>`
-        ).join("");
-        card.innerHTML = `<h2>${album.title}</h2><p>${album.introduction}</p><div class="album">${albumItems}</div><button class="continue-button" type="button">Volver a empezar</button>`;
-        card.querySelector("button").addEventListener("click", () => {
-          complete = [];
-          if (onRestart) onRestart(); else draw();
-        });
+        renderAlbum();
         return;
       }
       const formMarkup = level.type === "choice"
